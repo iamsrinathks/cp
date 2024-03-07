@@ -1,0 +1,108 @@
+Certainly! Let's elaborate on each case for a more detailed explanation.
+
+---
+
+# Vsomeip Communication Testing Documentation
+
+## Overview
+
+This document provides a detailed account of the changes made and the outcomes observed during the testing of Vsomeip communication between SomeipAdaptor and EVA2_VAL (Tele VM <-> Hypervisor).
+
+## 1. Successful Configuration
+
+### 1.1 Configuration Details
+
+#### Description:
+
+The initial test involved configuring both the client and server with an application id. Additionally, specific parameters such as netmask and udp-receive-buffer-size were set.
+
+#### Results:
+
+This configuration led to successful communication between the client and server, indicating that the basic setup with application id and specified parameters is functional.
+
+## 2. Service Discovery Disabled
+
+### 2.1 Attempt 1
+
+#### Changes Made:
+
+- Disabled service discovery.
+- Excluded Event and event group mapping inclusion in the client config.
+
+#### Results:
+
+Despite disabling service discovery and excluding event mappings, the communication between the client and server failed. Further investigation is needed to understand the root cause of this failure.
+
+### 2.2 Attempt 2
+
+#### Changes Made:
+
+- Disabled service discovery.
+- Added reliable port and enabled magic cookie in the server config.
+
+#### Results:
+
+The attempt to disable service discovery and introduce reliable port and magic cookie in the server configuration did not result in successful communication. This outcome suggests that the introduced changes may require revision.
+
+### 2.3 Attempt 3
+
+#### Changes Made:
+
+- Disabled service discovery.
+- Modified is_field, is_reliable, and update-cycle fields in events (server config).
+
+#### Results:
+
+Despite modifying key fields in the server configuration, the attempt to disable service discovery and establish communication failed. Further analysis is required to identify the specific issues with the modified fields.
+
+## 3. Service Discovery Enabled
+
+### 3.1 Attempt 1
+
+#### Changes Made:
+
+- Enabled service discovery.
+
+#### Results:
+
+Enabling service discovery led to a communication failure, accompanied by the error message "EVA2_VAL routing manager already present won't be instantiated." To address this issue, a different vsomeip version (3.1.20) library version from artifactory was copied. However, this did not resolve the communication problem.
+
+### 3.2 Attempt 2
+
+#### Changes Made:
+
+- Enabled service discovery.
+- Added fields (port, protocol, initial_delay_min, etc.) in server and client config.
+
+#### Results:
+
+Enabling service discovery and introducing additional fields in both server and client configurations did not result in successful communication. The reasons for the failure need to be investigated further.
+
+### 3.3 Attempt 3
+
+#### Changes Made:
+
+- Enabled service discovery.
+- Copied a different vsomeip version (3.1.20) library version from artifactory.
+
+#### Results:
+
+Despite copying a different vsomeip version, enabling service discovery did not resolve the communication issues. This suggests that other factors may be contributing to the failure.
+
+## 4. Additional Testing
+
+### 4.1 Attempt 1
+
+#### Changes Made:
+
+- Disabled service discovery.
+- Modified vsomeip notify to vsomeip send.
+- Set service, instance, method.
+
+#### Results:
+
+Modifying the vsomeip notify to vsomeip send and setting specific service, instance, and method did not result in successful communication. Further investigation is needed to determine the impact of these modifications on the communication process.
+
+## Conclusion
+
+In summary, the testing revealed varying degrees of success and failure based on different configurations. The detailed outcomes of each attempt provide a foundation for further investigation and troubleshooting. Additional steps may include reviewing logs, examining error messages, and collaborating with relevant teams to identify and address the root causes of communication failures.
